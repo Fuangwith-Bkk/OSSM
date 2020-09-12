@@ -26,6 +26,9 @@ public class ApplicationResource {
     @ConfigProperty(name = "app.version")
     String appVersion;
 
+    @ConfigProperty(name = "response.delay")
+    int delay;
+
     private final Logger logger = Logger.getLogger(ApplicationResource.class.getName());
 
     @GET
@@ -53,7 +56,13 @@ public class ApplicationResource {
         String userAgent = headers.getRequestHeader("user-agent").get(0);
         logger.info("user-agent:" + userAgent);
 
-        return Response.status(Response.Status.OK).entity("Response from app.name: " + appName + ", app.version: " + appVersion + ", server name: " + getServerName()).build();
+        try{
+            Thread.sleep(delay);
+        }catch(Exception ex){
+            logger.severe(ex.getMessage());
+        }
+
+        return Response.status(Response.Status.OK).entity("Response from app.name: " + appName + ", app.version: " + appVersion + ", server name: " + getServerName() + ", User-Agent: " + userAgent).build();
     }
 
 
