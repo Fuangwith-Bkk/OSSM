@@ -1,5 +1,7 @@
 package com.chan;
 
+import java.net.InetAddress;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.GET;
@@ -11,8 +13,18 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import io.quarkus.arc.config.ConfigProperties;
+
 @Path("/")
 public class ApplicationResource {
+
+    @ConfigProperty(name = "app.name")
+    String appName;
+
+    @ConfigProperty(name = "app.version")
+    String appVersion;
 
     private final Logger logger = Logger.getLogger(ApplicationResource.class.getName());
 
@@ -32,12 +44,28 @@ public class ApplicationResource {
 
     @GET
     @Path("/req")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response request(@Context HttpHeaders headers){
         logger.info("/req");
+        logger.info("app.name: " + appName);
+        logger.info("app.version: " + appVersion);
+
         String userAgent = headers.getRequestHeader("user-agent").get(0);
         logger.info("user-agent:" + userAgent);
-        return Response.status(Response.Status.OK).entity("Response from backend.").build();
+
+        return Response.status(Response.Status.OK).entity("Response from app.name: " + appName + ", app.version: " + appVersion + ", server name: " + getServerName()).build();
+    }
+
+
+    private String getServerName(){
+        try{
+            String serverName = InetAddress.getLocalHost().getHostName();
+            logger.info("Server Name: " + serverName);
+            return serverName;
+        }catch(Exception ex){
+            logger.severe(ex.getMessage());
+            return "Unknow server name.";
+        }
     }
 
 
