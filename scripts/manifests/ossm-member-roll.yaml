@@ -1,0 +1,9 @@
+apiVersion: maistra.io/v1
+kind: ServiceMeshMemberRoll
+metadata:
+  name: default
+  namespace: demo-ossm-control-plane
+spec:
+  members:
+    - demo-ossm-frontend
+    - demo-ossm-backend

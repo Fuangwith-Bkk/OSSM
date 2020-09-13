@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: ossm-backend
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: ossm-backend
+    weight: 100
+  wildcardPolicy: None
