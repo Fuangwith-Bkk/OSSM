@@ -2,15 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/part-of: ossm-backend
-  name: ossm-backend-v1
+    app.kubernetes.io/part-of: ossm-frontend
+  name: ossm-frontend-v1
+  namespace: demo-ossm-frontend
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: ossm-backend
+      app: ossm-frontend
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,15 +21,23 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: ossm-backend
-        deploymentconfig: ossm-backend
+        app: ossm-frontend
+        deploymentconfig: ossm-frontend
       annotations:
         sidecar.istio.io/inject: 'false'
     spec:
       containers:
-      - image: quay.io/fuangwit/ossm-backend-native:v1
+      - image: quay.io/fuangwit/ossm-frontend-native:v1
         imagePullPolicy: Always
-        name: ossm-backend-v1
+        name: ossm-frontend
         ports:
         - containerPort: 8080
           protocol: TCP
+        volumeMounts:
+        - mountPath: /work/config
+          name: app-config
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: app-config
+        name: app-config
