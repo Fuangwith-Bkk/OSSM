@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/part-of: ossm-frontend
+    app.kubernetes.io/name: quarkus
   name: ossm-frontend-v1
   namespace: demo-ossm-frontend
 spec:

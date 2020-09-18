@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/part-of: ossm-backend
+    app.kubernetes.io/name: quarkus
   name: ossm-backend-v2
 spec:
   progressDeadlineSeconds: 600

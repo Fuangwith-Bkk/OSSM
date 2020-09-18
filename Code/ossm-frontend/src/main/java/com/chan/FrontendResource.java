@@ -47,13 +47,14 @@ public class FrontendResource {
         logger.info("/req");
         logger.info("app.name: " + appName);
         logger.info("app.version: " + appVersion);
-
         String userAgent = headers.getRequestHeader("user-agent").get(0);
         logger.info("user-agent:" + userAgent);
 
-        backendService.request();
+        Response response = backendService.request();
+        int res_status = response.getStatus();
+        String resMessage = response.readEntity(String.class);
 
-        return Response.status(Response.Status.OK).entity("Response from app.name: " + appName + ", app.version: " + appVersion + ", server name: " + getServerName() + ", User-Agent: " + userAgent).build();
+        return Response.status(Response.Status.OK).entity(appName + " " +appVersion + " >> [" + res_status +"] " + resMessage).build();
     }
 
     private String getServerName(){
