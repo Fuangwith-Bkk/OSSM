@@ -62,7 +62,7 @@ public class ApplicationResource {
             logger.severe(ex.getMessage());
         }
 
-        return Response.status(Response.Status.OK).entity("Response from app.name: " + appName + ", app.version: " + appVersion + ", server name: " + getServerName() + ", User-Agent: " + userAgent).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity("Response from app.name: " + appName + ", app.version: " + appVersion + ", server name: " + getServerName() + ", User-Agent: " + userAgent).build();
     }
 
 

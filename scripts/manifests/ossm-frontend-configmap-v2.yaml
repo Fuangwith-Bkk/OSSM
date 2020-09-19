@@ -1,0 +1,20 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: app-config-v2
+  namespace: demo-ossm-frontend
+data:
+  application.properties: >+
+    # Configuration file
+
+    # key = value
+
+
+    app.name=frontend
+
+    app.version=v2
+
+    com.chan.client.BackendService/mp-rest/url=http://ossm-backend.demo-ossm-backend.svc.cluster.local:8080
+
+    com.chan.client.BackendService/mp-rest/scope=javax.inject.Singleton
+

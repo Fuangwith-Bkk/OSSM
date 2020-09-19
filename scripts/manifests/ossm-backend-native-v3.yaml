@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/part-of: ossm-backend-v3
+    app.kubernetes.io/name: quarkus
+  name: ossm-backend-v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ossm-backend-v3
+      version: v3
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ossm-backend-v3
+        version: v3
+      annotations:
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - image: quay.io/fuangwit/ossm-backend-native:v3
+        imagePullPolicy: Always
+        name: ossm-backend-v3
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+
+

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/part-of: ossm-frontend
+    app.kubernetes.io/name: quarkus
+  name: ossm-frontend-v2
+  namespace: demo-ossm-frontend
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ossm-frontend
+      version: v2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ossm-frontend
+        version: v2
+      annotations:
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+      - image: quay.io/fuangwit/ossm-frontend-native:v1
+        imagePullPolicy: Always
+        name: ossm-frontend
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /work/config
+          name: app-config-v2
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: app-config-v2
+        name: app-config-v2
