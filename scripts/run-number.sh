@@ -1,8 +1,9 @@
 #!/bin/sh
 
+source setURL.sh
 COUNT=0
 MAX=$1
-URL=ossm-backend-ztest.apps.cluster-94f9.94f9.example.opentlc.com/req
+URL=$FRONTEND_URL
 
 while [ $COUNT -lt $MAX ];
 do

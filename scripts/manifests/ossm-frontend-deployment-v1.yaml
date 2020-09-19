@@ -13,6 +13,7 @@ spec:
   selector:
     matchLabels:
       app: ossm-frontend
+      version: v1
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -23,7 +24,7 @@ spec:
       creationTimestamp: null
       labels:
         app: ossm-frontend
-        deploymentconfig: ossm-frontend
+        version: v1
       annotations:
         sidecar.istio.io/inject: 'false'
     spec:

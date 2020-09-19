@@ -6,12 +6,11 @@ metadata:
     app.kubernetes.io/name: quarkus
   name: ossm-backend-v1
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: ossm-backend
+      version: v1
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -22,7 +21,7 @@ spec:
       creationTimestamp: null
       labels:
         app: ossm-backend
-        deploymentconfig: ossm-backend
+        version: v1
       annotations:
         sidecar.istio.io/inject: 'false'
     spec:

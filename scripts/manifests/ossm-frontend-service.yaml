@@ -4,13 +4,11 @@ metadata:
   labels:
     app: ossm-frontend
   name: ossm-frontend
-  namespace: demo-ossm-frontend
 spec:
   ports:
-  - name: 8080-tcp
+  - name: http
     port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
     app: ossm-frontend
-    deploymentconfig: ossm-frontend
