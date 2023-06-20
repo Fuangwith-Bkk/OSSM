@@ -5,6 +5,7 @@ metadata:
   name: basic-install
 spec:
   security:
+    manageNetworkPolicy: false
     controlPlane:
       mtls: true
     dataPlane:
@@ -48,10 +49,10 @@ spec:
         default: info
       logAsJSON: false
   policy:
-    mixer:
-      enableChecks: true
-      failOpen: false
-      sessionAffinity: false
+    # mixer:
+    #   enableChecks: true
+    #   failOpen: false
+    #   sessionAffinity: false
     type: Istiod
   addons:
     grafana:
@@ -64,7 +65,7 @@ spec:
       enabled: true
     prometheus:
       enabled: true
-  version: v2.0
+  version: v2.4
   runtime:
     defaults:
       deployment:
